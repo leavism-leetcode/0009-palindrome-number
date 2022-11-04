@@ -4,12 +4,12 @@ public class Solution {
         if (x < 0) { return false; }
 
         String number = String.valueOf(x);
-        int j = number.length();
+        int length = number.length();
         for(int i = 0; i < number.length() / 2; i++) {
             String first = number.substring(i, i+1);
-            String second = number.substring(j-1, j);
+            String second = number.substring(length-1, length);
             if (!first.equals(second)) { return false; }
-            j -= 1;
+            length -= 1;
         }
         return true;
     }
@@ -43,37 +43,26 @@ public class Solution {
     }
 
     public static boolean mathIsPalindrome(int x) {
-        int length = String.valueOf(x).length();
         int original = x;
-        int rem = 0;
-        double dec = Math.pow(10, length - 1);
+        int remainder = 0;
         while ( x > 0) {
-            rem += (x % 10) * dec;
-            dec /= 10;
+            /*
+            remainder * 10 gets the current remainder value and bumps it up one digit. Ex: 1 -> 10 | 10 -> 100 | 100 -> 1000
+            x % 10 gets the value of the lowest/ones digit. Ex: 12 -> 2 | 146 -> 6 | 4837 -> 7
+            Add them together to get the reverse of x
+            Ex: 123 | 0
+                12  | 3
+                1   | 32
+                0   | 321
+             */
+            remainder = (remainder * 10) + (x % 10);
             x /= 10;
         }
-        return rem == original;
+        return remainder == original;
     }
 
     public static void main(String[] args) {
         System.out.println(mathIsPalindrome(
                 2147483647));
-
-        // 1234 || 0
-        // 123 R 4 || 4
-        // 123 R 3 || 34 43
-
-        // 12321 || 0
-        // 1232 R 1 || 1
-        // 123 R 2 || 21
-        // 12 R 3 || 321
-        // 1 R 2 || 2321
-        // 0 R 1 || 12321
-
-        // 1221
-        // 122 R 1
-        // 12 R 2
-        // 1 R 2
-        // 0 R 1
     }
 }
